@@ -8,7 +8,8 @@ summarized format
 import re
 import sys
 
-input_format = r'^(\d{1,3}\.){3}\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}\] "([^"]*)" \d{3} \d+$'
+input_format = r'^(\d{1,3}\.){3}\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\
+\d{2}:\d{2}\.\d{6}\] "([^"]*)" \d{3} \d+$'
 
 
 def check_if_valid_input(pattern, log_entry):
@@ -58,14 +59,13 @@ if __name__ == "__main__":
                     code_count["404"] = status_codes.count("404")
                     code_count["405"] = status_codes.count("405")
                     code_count["500"] = status_codes.count("500")
-                        
+
                     print(f"File size: {total_size}")
                     for key, value in code_count.items():
                         if value:
                             print(f"{key}: {value}")
             else:
                 continue
-
 
     except KeyboardInterrupt:
         code_count["200"] = status_codes.count("200")
