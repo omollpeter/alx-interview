@@ -10,6 +10,8 @@ def validUTF8(data):
     integer is, else False
     """
     for i in data:
+        if type(i) is not int:
+            return False
         bin_data = bin(i)
         if bin_data.startswith("-"):
             return False
