@@ -10,6 +10,9 @@ def validUTF8(data):
     integer is, else False
     """
     for i in data:
-        if i < 0 or i > 127:
+        bin_data = bin(i)
+        if bin_data.startswith("-"):
+            return False
+        if len(bin_data) - 2 > 7:
             return False
     return True
