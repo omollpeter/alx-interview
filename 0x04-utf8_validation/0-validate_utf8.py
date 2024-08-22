@@ -9,6 +9,8 @@ def validUTF8(data):
     Validates if characters in data are UTF-8 and returns true if each
     integer is, else False
     """
+    if type(data) is not list:
+        return False
     for i in data:
         if type(i) is not int:
             return False
