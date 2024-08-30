@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import sys
 
+
 def is_valid(board, row, col):
     """Check if the queen can be placed on board at (row, col)."""
     for i in range(row):
@@ -9,6 +10,7 @@ def is_valid(board, row, col):
            board[i] + i == col + row:
             return False
     return True
+
 
 def solve_n_queens(n):
     """Solve the N-Queens problem and print all solutions."""
@@ -25,12 +27,14 @@ def solve_n_queens(n):
     board = [-1] * n
     backtrack(0)
 
+
 def print_solution(board):
     """Print the board in the required format."""
     solution = []
     for i in range(len(board)):
         solution.append([i, board[i]])
     print(solution)
+
 
 def main():
     if len(sys.argv) != 2:
@@ -48,6 +52,7 @@ def main():
         sys.exit(1)
 
     solve_n_queens(n)
+
 
 if __name__ == "__main__":
     main()
