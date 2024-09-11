@@ -1,4 +1,4 @@
-#!/usr/bin/pythion3
+#!/usr/bin/python3
 """
 Contains function that transposes a 2D matrix
 """
