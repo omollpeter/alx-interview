@@ -32,12 +32,12 @@ def island_perimeter(grid):
     """
     rows, cols = len(grid), len(grid[0])
     perimeter = 0
-    
+
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == 1:
                 perimeter += 4
-                
+
                 # Check if the top cell is land
                 if r > 0 and grid[r - 1][c] == 1:
                     perimeter -= 2
@@ -45,3 +45,14 @@ def island_perimeter(grid):
                 if c > 0 and grid[r][c - 1] == 1:
                     perimeter -= 2
     return perimeter
+
+
+grid = [
+    [0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 0, 0],
+    [0, 1, 0, 1, 0, 0],
+    [0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0]
+]
+
+island_perimeter(grid)
