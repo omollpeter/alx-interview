@@ -27,6 +27,9 @@ Contains a function that calculates island perimeter
 #     return perimeter
 
 def island_perimeter(grid):
+    """
+    Do it
+    """
     rows, cols = len(grid), len(grid[0])
     perimeter = 0
     
