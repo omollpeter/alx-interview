@@ -4,58 +4,65 @@ Contains a function that implements Prime Game
 """
 
 
-def prime_number_picker(nums):
+def sieve_of_eratosthenes(max_n):
     """
-    Returns the first prime number in an array
+    Returns an array where prime[i] is True if i is a prime number,
+    False otherwise.
+    Uses the Sieve of Eratosthenes to identify primes.
     """
-    for n in nums:
-        if n == 1:
-            continue
-        if n == 2:
-            return 2
-        divisor = 2
-        while divisor <= n // 2:
-            if n % divisor == 0:
-                break
-            divisor += 1
-        else:
-            return n
-        return 0
-
-
-def multiples_remover(number, nums):
-    """
-    Removes multiples of number from an array nums
-    """
-    for num in nums:
-        if num % number == 0:
-            nums.remove(num)
-    return nums
+    prime = [True] * (max_n + 1)
+    prime[0] = prime[1] = False  # 0 and 1 are not prime numbers
+    for i in range(2, int(max_n ** 0.5) + 1):
+        if prime[i]:
+            for j in range(i * i, max_n + 1, i):
+                prime[j] = False
+    return prime
 
 
 def isWinner(x, nums):
     """
-    Returns the winner in a Prime game
+    Determines the winner of the Prime Game after x rounds.
+    Maria plays first, and both players play optimally.
+
+    Parameters:
+    - x: number of rounds
+    - nums: list of integers where each number represents
+      the size of the set for that round
+
+    Returns:
+    - Name of the player that won the most rounds ("Maria" or "Ben")
+    - None if the winner cannot be determined (tie)
     """
-    win_counts = {
-        "Maria": 0,
-        "Ben": 0
-    }
+    if x < 1 or not nums:
+        return None
 
-    for i in range(x):
-        for num in nums:
-            player = "Maria"
-            game_array = list(range(1, num + 1))
+    # Find the maximum number in nums to optimize the sieve
+    max_n = max(nums)
 
-            while game_array:
-                prime = prime_number_picker(game_array)
-                if prime:
-                    game_array = multiples_remover(prime, game_array)
-                    player = "Ben" if player == "Maria" else "Maria"
-                else:
-                    if player == "Maria":
-                        win_counts["Ben"] += 1
-                    else:
-                        win_counts["Maria"] += 1
-                    break
-    return max(win_counts, key=win_counts.get)
+    # Step 1: Generate all primes up to max_n using the sieve
+    prime = sieve_of_eratosthenes(max_n)
+
+    # Step 2: Precompute the number of prime removals for each number of rounds
+    prime_counts = [0] * (max_n + 1)
+
+    for i in range(1, max_n + 1):
+        prime_counts[i] = prime_counts[i - 1] + (1 if prime[i] else 0)
+
+    # Step 3: Simulate the game for each round
+    maria_wins = 0
+    ben_wins = 0
+
+    for n in nums:
+        # The number of moves is equal to the number of primes <= n
+        if prime_counts[n] % 2 == 0:
+            ben_wins += 1  # Ben wins if the number of primes is even
+        else:
+            maria_wins += 1  # Maria wins if the number of primes is odd
+
+    # Step 4: Determine the overall winner
+    if maria_wins > ben_wins:
+        return "Maria"
+    elif ben_wins > maria_wins:
+        return "Ben"
+    else:
+        return None
